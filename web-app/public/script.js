@@ -369,7 +369,7 @@ function submitForm() {
     });
     
     // Make an HTTP POST request to the server
-    fetch('https://discoball.vercel.app/api/server',{
+    fetch('https://discoball_test.vercel.app/api/server',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
