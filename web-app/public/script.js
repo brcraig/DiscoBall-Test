@@ -2,11 +2,8 @@
 // Global variables
 let clonedSvg;
 const selectedAnswers = {};
-
 let dbAnswers = {};
-
 let currentQuestionIndex = 0; 
-
 let prev_offset_arr = [];
 
 
