@@ -1,6 +1,6 @@
 [
   {
-    "question": "What is your primary or preferred learning style?",
+    "question": "What is your primary or learning style?",
     "answers": [
         ["Visual", 1],
         ["Auditory", 2],
