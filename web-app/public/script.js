@@ -204,7 +204,7 @@ function handleNextButtonClick(button, index, buttons) {
     if (isLastQuestion) {
         console.log("About to call submitForm", clonedSvg);
         // Process the final question differently
-        submitForm();
+        submitFormCSV();
 
         // Hide the current question section
         const currentSection = button.closest('.question-section');
@@ -369,7 +369,7 @@ function submitForm() {
     });
     
     // Make an HTTP POST request to the server
-    fetch('https://discoball.vercel.app/api/server',{
+    fetch('https://discoballtest.vercel.app/api/server',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -394,3 +394,66 @@ function submitForm() {
         // Handle error, if needed
     });
 }
+
+function submitFormCSV() {
+    // Convert dbAnswers object to an array
+    const answersArray = Object.values(dbAnswers);
+
+    if (!clonedSvg || !(clonedSvg instanceof SVGSVGElement)) {
+        console.error('Cloned SVG is not ready for saving.');
+        return;
+    }
+
+    // Append the colored SVG to the display container
+    const svgDisplayContainer = document.getElementById('svgDisplayContainer');
+    svgDisplayContainer.innerHTML = ''; // Clear the container
+    svgDisplayContainer.appendChild(clonedSvg); // Add the colored SVG to the container
+
+    // Show the download button
+    const downloadButton = document.getElementById('download-button');
+    downloadButton.style.display = 'flex'; // Use 'flex' to make it visible
+
+    // Event listener for the download button
+    downloadButton.addEventListener('click', function() {
+        saveSvg(clonedSvg, 'export_discoball.svg');
+    });
+
+    // Convert dbAnswers to CSV format
+    const csvData = convertToCSV(dbAnswers);
+
+    // Send CSV data to the server to write to a file
+    fetch('https://discoballtest.vercel.app/api/server', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ answers: dbAnswers })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to submit form');
+        }
+        return response.json(); // Assuming the server sends a JSON response
+    })
+    .then(data => {
+        console.log('Form data submitted successfully:', data);
+        // Handle success, if needed
+    })
+    .catch(error => {
+        console.error('Error submitting form:', error);
+        // Handle error, if needed
+    });
+}
+
+// Helper function to convert dbAnswers object to CSV format
+function convertToCSV(data) {
+    const rows = [['QuestionIndex', 'AnswerValue']]; // CSV headers
+
+    for (const [questionIndex, answerValue] of Object.entries(data)) {
+        rows.push([questionIndex, answerValue]);
+    }
+
+    // Convert array of rows to CSV string
+    return rows.map(row => row.join(',')).join('\n');
+}
+
