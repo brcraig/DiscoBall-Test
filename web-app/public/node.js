@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 app.use(express.json()); // To parse JSON bodies
 
-// Define the path to your CSV file
+// Define the path to CSV file
 const csvFilePath = path.join(__dirname, 'testdata.csv');
 
 // Endpoint to receive data and append to CSV

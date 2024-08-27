@@ -360,7 +360,7 @@ function submitForm() {
     downloadButton.style.display = 'flex'; // Use 'flex' to make it visible
 
 
-    // Event listener for the download button
+    // Event listener for  download button
     downloadButton.addEventListener('click', function() {
         saveSvg(clonedSvg, 'export_discoball.svg');
     });
