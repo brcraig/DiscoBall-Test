@@ -2,11 +2,8 @@
 // Global variables
 let clonedSvg;
 const selectedAnswers = {};
-
 let dbAnswers = {};
-
 let currentQuestionIndex = 0; 
-
 let prev_offset_arr = [];
 
 
@@ -369,7 +366,7 @@ function submitForm() {
     });
     
     // Make an HTTP POST request to the server
-    fetch('https://discoballtest.vercel.app/api/server',{
+    fetch('https://discoballtest-brianas-projects-31ed3252.vercel.app/api/server',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
